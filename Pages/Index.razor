@@ -2,6 +2,9 @@
 
 <div class = "main">
     <h1>Blazizza</h1>
+    <NavLink class="nav-link" href="sales">
+        <span class="oi oi-plus" aria-hidden="true"></span>Sales
+    </NavLink>
     <ul class="pizza-cards">
         @if(specials != null)
         {
@@ -17,8 +20,42 @@
             }
         }
     </ul>
+    <label for="">
+        <input type="radio" 
+                name="group"
+                value="1"
+                checked="@(selectedGroup==1)"
+                @onclick="()=>selectedGroup = 1"/>1
+        <input type="radio" 
+                name="group"
+                value="2"
+                checked="@(selectedGroup==2)"
+                @onclick="()=>selectedGroup = 2"/>2
+    </label>
+    @selectedGroup
+    <p>
+        <select @bind="selectedPizza">
+            <option value=""></option>
+            @foreach (var pizza in specials)
+            {
+                <option value="@pizza.Name">@pizza.Name</option>
+            }
+        </select>
+        <br/>
+        @selectedPizza
+    </p>
+    <p>
+        <ul>
+            @foreach (var pizza in specials)
+            {
+                <li>@pizza.Description</li>
+            }
+        </ul>
+    </p>
 </div>
 		@code{
+            int selectedGroup=0;
+            string selectedPizza="";
             List<PizzaSpecial> specials = new();
 
             protected override void OnInitialized()
